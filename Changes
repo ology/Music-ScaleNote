@@ -1,6 +1,8 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+
+0.02 2018-04-04 14:48:18
     - Added boundary checks.
     - Added the verbose attribute.
 

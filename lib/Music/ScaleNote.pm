@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of notes in a scale
 
-our $VERSION = '0.0202';
+our $VERSION = '0.03';
 
 use Carp;
 use Moo;
@@ -107,9 +107,16 @@ sub get_offset {
 
     my $rev;  # Going in reverse?
 
-    my $note = Music::Note->new( $args{note_name}, $args{note_format} );
-    warn sprintf "Given note: %s, ISO: %s, Offset: %d\n",
-        $args{note_name}, $note->format('ISO'), $args{offset}
+    my $note  = Music::Note->new( $args{note_name}, $args{note_format} );
+
+    my $equiv;
+    if ( $note->format('isobase') =~ /b/ || $note->format('isobase') =~ /#/ ) {
+        $equiv = Music::Note->new( $args{note_name}, $args{note_format} );
+        $equiv->en_eq( $note->format('isobase') =~ /b/ ? 'sharp' : 'flat' );
+    }
+
+    warn sprintf "Given note: %s, ISO: %s/%s, Offset: %d\n",
+        $args{note_name}, $note->format('ISO'), ( $equiv ? $equiv->format('ISO') : '' ), $args{offset}
         if $self->verbose;
 
     my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
@@ -122,7 +129,12 @@ sub get_offset {
         @scale  = reverse @scale;
     }
 
-    my $posn = first { $scale[$_] eq $note->format('isobase') } 0 .. $#scale;
+    my $posn = first {
+        ( $scale[$_] eq $note->format('isobase') )
+        ||
+        ( $equiv && $scale[$_] eq $equiv->format('isobase') )
+    } 0 .. $#scale;
+
     if ( defined $posn ) {
         warn sprintf "\tPosition: %d\n", $posn
             if $self->verbose;

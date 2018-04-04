@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Position of notes in a scale
 
-our $VERSION = '0.01';
+our $VERSION = '0.0101';
 
 use Carp;
 use Moo;
@@ -49,7 +49,7 @@ has scale_note => (
 
 =head2 scale_name
 
-L<Music::Scales/SCALES>
+See L<Music::Scales/SCALES> for the possible names.
 
 Default: major
 
@@ -72,7 +72,7 @@ Create a new C<Music::ScaleNote> object.
   $note = $msn->get_offset(%arguments);
 
 Return a new L<Music::Note> object based on the given B<note_name>,
-B<note_format> and L<offset>.
+B<note_format> and B<offset>.
 
 =cut
 

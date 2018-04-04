@@ -1,8 +1,8 @@
 package Music::ScaleNote;
 
-# ABSTRACT: Position of notes in a scale
+# ABSTRACT: Manipulate the position of notes in a scale
 
-our $VERSION = '0.0102';
+our $VERSION = '0.0103';
 
 use Carp;
 use Moo;
@@ -56,7 +56,8 @@ Default: major
 =cut
 
 has scale_name => (
-    is => 'ro',
+    is      => 'ro',
+    default => sub { 'major' },
 );
 
 =head1 METHODS

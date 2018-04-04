@@ -1,7 +1,11 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
-    - Add the missing scale_name attribute default.
+    - Added boundary checks.
+    - Added the verbose attribute.
+
+0.0103 2018-04-03 21:28:13
+    - Added the missing scale_name attribute default.
     - Reword the package abstract.
 
 0.0102 2018-04-03 20:48:38

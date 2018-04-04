@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of notes in a scale
 
-our $VERSION = '0.0201';
+our $VERSION = '0.0202';
 
 use Carp;
 use Moo;
@@ -108,7 +108,8 @@ sub get_offset {
     my $rev;  # Going in reverse?
 
     my $note = Music::Note->new( $args{note_name}, $args{note_format} );
-    warn sprintf "Given note: %s, ISO: %s\n", $args{note_name}, $note->format('ISO')
+    warn sprintf "Given note: %s, ISO: %s, Offset: %d\n",
+        $args{note_name}, $note->format('ISO'), $args{offset}
         if $self->verbose;
 
     my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
@@ -122,7 +123,7 @@ sub get_offset {
     }
 
     my $posn = first { $scale[$_] eq $note->format('isobase') } 0 .. $#scale;
-    if ( $posn ) {
+    if ( defined $posn ) {
         warn sprintf "\tPosition: %d\n", $posn
             if $self->verbose;
         $args{offset} += $posn;
@@ -141,7 +142,7 @@ sub get_offset {
         if $octave < 0 or $octave > 127;
 
     $note = Music::Note->new( $scale[ $args{offset} % @scale ] . $octave, 'ISO' );
-    warn sprintf "\tOffset: %d, ISO: %s, Formatted: %s\n",
+    warn sprintf "\tNew offset: %d, ISO: %s, Formatted: %s\n",
         $args{offset}, $note->format('ISO'), $note->format($args{note_format})
         if $self->verbose;
 

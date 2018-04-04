@@ -60,6 +60,17 @@ has scale_name => (
     default => sub { 'major' },
 );
 
+=head2 verbose
+
+Show the progress of the B<get_offset> method.
+
+=cut
+
+has verbose => (
+    is      => 'ro',
+    default => sub { 0 },
+);
+
 =head1 METHODS
 
 =head2 new()
@@ -86,10 +97,13 @@ sub get_offset {
     my $rev;  # Going in reverse?
 
     my $note = Music::Note->new( $args{note_name}, $args{note_format} );
-#warn sprintf "Given note: %s, ISO: %s\n", $args{note_name}, $note->format('ISO');
+    warn sprintf "Given note: %s, ISO: %s\n", $args{note_name}, $note->format('ISO')
+        if $self->verbose;
 
     my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
-#warn "\tScale: @scale\n";
+    warn "\tScale: @scale\n"
+        if $self->verbose;
+
     if ( $args{offset} < 0 ) {
         $rev++;
         $args{offset} = abs $args{offset};
@@ -98,7 +112,8 @@ sub get_offset {
 
     my $posn = first { $scale[$_] eq $note->format('isobase') } 0 .. $#scale;
     if ( $posn ) {
-#warn sprintf "\tPosition: %d\n", $posn;
+        warn sprintf "\tPosition: %d\n", $posn
+            if $self->verbose;
         $args{offset} += $posn;
     }
 
@@ -111,9 +126,13 @@ sub get_offset {
     else {
         $octave += $factor;
     }
+    croak "Octave: $octave out of bounds"
+        if $octave < 0 or $octave > 127;
 
     $note = Music::Note->new( $scale[ $args{offset} % @scale ] . $octave, 'ISO' );
-#warn sprintf "\tOffset: %d, ISO: %s, Given format: %s\n", $args{offset}, $note->format('ISO'), $note->format($args{note_format});
+    warn sprintf "\tOffset: %d, ISO: %s, Formatted: %s\n",
+        $args{offset}, $note->format('ISO'), $note->format($args{note_format})
+        if $self->verbose;
 
     return $note;
 }

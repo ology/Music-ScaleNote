@@ -86,10 +86,10 @@ sub get_offset {
     my $rev;  # Going in reverse?
 
     my $note = Music::Note->new( $args{note_name}, $args{note_format} );
-#warn(__PACKAGE__,' L',__LINE__,". MARK: $args{note_name} - ",$note->format('ISO'),"\n");
+#warn sprintf "Given note: %s, ISO: %s\n", $args{note_name}, $note->format('ISO');
 
     my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
-#warn(__PACKAGE__,' L',__LINE__,". MARK: @scale",,"\n");
+#warn "\tScale: @scale\n";
     if ( $args{offset} < 0 ) {
         $rev++;
         $args{offset} = abs $args{offset};
@@ -97,9 +97,10 @@ sub get_offset {
     }
 
     my $posn = first { $scale[$_] eq $note->format('isobase') } 0 .. $#scale;
-#warn(__PACKAGE__,' L',__LINE__,". MARK: $args{note_name}=$posn\n") if $posn;
-
-    $args{offset} += $posn if $posn;
+    if ( $posn ) {
+#warn sprintf "\tPosition: %d\n", $posn;
+        $args{offset} += $posn;
+    }
 
     my $octave = $note->octave;
     my $factor = int( $args{offset} / @scale );
@@ -112,7 +113,7 @@ sub get_offset {
     }
 
     $note = Music::Note->new( $scale[ $args{offset} % @scale ] . $octave, 'ISO' );
-#warn(__PACKAGE__,' L',__LINE__,". MARK: $args{offset} => ",$note->format('ISO') .' - '.$note->format($args{note_format}),"\n");
+#warn sprintf "\tOffset: %d, ISO: %s, Given format: %s\n", $args{offset}, $note->format('ISO'), $note->format($args{note_format});
 
     return $note;
 }

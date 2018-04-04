@@ -1,6 +1,10 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Add the missing scale_name attribute default.
+    - Reword the package abstract.
+
+0.0102 2018-04-03 20:48:38
     - Band-aid code boundary case...
 
 0.0101 2018-04-03 19:31:28

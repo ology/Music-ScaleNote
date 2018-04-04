@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Position of notes in a scale
 
-our $VERSION = '0.0101';
+our $VERSION = '0.0102';
 
 use Carp;
 use Moo;
@@ -96,9 +96,9 @@ sub get_offset {
     }
 
     my $posn = first { $scale[$_] eq $note->format('isobase') } 0 .. $#scale;
-#warn(__PACKAGE__,' L',__LINE__,". MARK: $args{note_name}=$posn\n");
+#warn(__PACKAGE__,' L',__LINE__,". MARK: $args{note_name}=$posn\n") if $posn;
 
-    $args{offset} += $posn;
+    $args{offset} += $posn if $posn;
 
     my $octave = $note->octave;
     my $factor = int( $args{offset} / @scale );

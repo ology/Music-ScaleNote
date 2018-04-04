@@ -19,6 +19,7 @@ use Music::Scales;
   my $msn = Music::ScaleNote->new(
     scale_note => 'C',
     scale_name => 'pminor',
+    verbose    => 1,
   );
   my $note = $msn->get_offset(
     note_name   => 'C4',
@@ -32,11 +33,19 @@ use Music::Scales;
 
 A C<Music::ScaleNote> object manipulates the position of notes in a given scale.
 
+Given a scale, a starting note, a scale note, and a scale position offset, this
+module computes the new note.
+
+So for scale C<C D# F G A#> (C pentatonic minor), note C<C4>, and offset C<1>
+(move one note to the right), this module will return C<D#4>.
+
+For offset C<-1>, C<A#3> is returned.
+
 =head1 ATTRIBUTES
 
 =head2 scale_note
 
-This is the name of the note that starts the given B<scale_name>.
+This is the name of the note that starts the given scale.
 
 Default: C
 
@@ -49,7 +58,9 @@ has scale_note => (
 
 =head2 scale_name
 
-See L<Music::Scales/SCALES> for the possible names.
+This is the name of the scale to use.
+
+Please see L<Music::Scales/SCALES> for the possible names.
 
 Default: major
 

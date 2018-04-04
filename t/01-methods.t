@@ -7,6 +7,7 @@ use_ok 'Music::ScaleNote';
 my $msn = Music::ScaleNote->new(
     scale_note => 'C',
     scale_name => 'pminor',
+#    verbose    => 1,
 );
 isa_ok $msn, 'Music::ScaleNote';
 

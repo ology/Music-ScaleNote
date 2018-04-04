@@ -1,6 +1,9 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Check for enharmonic equivalent matches too!
+
+0.0202 2018-04-04 15:31:05
     - Added missing defined keyword!
     - Improved verbose output.
 

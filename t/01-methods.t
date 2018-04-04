@@ -31,4 +31,20 @@ $x = $msn->get_offset(
 );
 is $x->format($format), 'C4', 'get_offset';
 
+throws_ok {
+    $x = $msn->get_offset(
+        note_name   => 'C0',
+        note_format => $format,
+        offset      => -1,
+    )
+} qr/Octave: -1 out of bounds/, 'out of bounds';
+
+throws_ok {
+    $x = $msn->get_offset(
+        note_name   => 'A#127',
+        note_format => $format,
+        offset      => 1,
+    )
+} qr/Octave: 128 out of bounds/, 'out of bounds';
+
 done_testing();

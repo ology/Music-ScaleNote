@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of notes in a scale
 
-our $VERSION = '0.03';
+our $VERSION = '0.0301';
 
 use Carp;
 use Moo;
@@ -140,6 +140,9 @@ sub get_offset {
             if $self->verbose;
         $args{offset} += $posn;
     }
+    else {
+        warn "Scale position not defined!\n";
+    }
 
     my $octave = $note->octave;
     my $factor = int( $args{offset} / @scale );
@@ -150,8 +153,6 @@ sub get_offset {
     else {
         $octave += $factor;
     }
-    croak "Octave: $octave out of bounds"
-        if $octave < 0 or $octave > 127;
 
     $note = Music::Note->new( $scale[ $args{offset} % @scale ] . $octave, 'ISO' );
     warn sprintf "\tNew offset: %d, ISO: %s, Formatted: %s\n",

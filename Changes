@@ -1,6 +1,9 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Remove the unnecessary octave boundaries.
+
+0.03 2018-04-04 16:54:37
     - Check for enharmonic equivalent matches too!
 
 0.0202 2018-04-04 15:31:05

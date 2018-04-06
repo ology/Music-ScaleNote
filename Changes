@@ -1,6 +1,8 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+
+0.0301 2018-04-04 19:13:22
     - Remove the unnecessary octave boundaries.
 
 0.03 2018-04-04 16:54:37

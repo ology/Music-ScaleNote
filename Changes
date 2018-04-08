@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Allow default note_format and offset values to be set in the constructor.
 
 0.0301 2018-04-04 19:13:22
     - Remove the unnecessary octave boundaries.

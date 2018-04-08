@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of notes in a scale
 
-our $VERSION = '0.0301';
+our $VERSION = '0.04';
 
 use Carp;
 use Moo;
@@ -71,6 +71,29 @@ has scale_name => (
     default => sub { 'major' },
 );
 
+=head2 note_format
+
+The format as given by L<Music::Note/STYLES>.  If given in the constructor, this
+is used as the default in the B<get_offset> method.
+
+=cut
+
+has note_format => (
+    is => 'ro',
+);
+
+=head2 offset
+
+The integer offset of a new scale position.  If given in the constructor, this
+is used as the default in the B<get_offset> method.
+
+=cut
+
+has offset => (
+    is  => 'ro',
+    isa => sub { die 'Not an integer' unless $_[0] =~ /^\d+$/ },
+);
+
 =head2 verbose
 
 Show the progress of the B<get_offset> method.
@@ -101,6 +124,9 @@ B<note_format> and B<offset>.
 
 sub get_offset {
     my ( $self, %args ) = @_;
+
+    $args{note_format} ||= $self->note_format;
+    $args{offset}      ||= $self->offset;
 
     croak 'note_name, note_format or offset not provided'
         unless $args{note_name} || $args{note_format} || $args{offset};

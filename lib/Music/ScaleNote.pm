@@ -32,7 +32,7 @@ use Music::Scales;
 
 =head1 DESCRIPTION
 
-A C<Music::ScaleNote> object manipulates the position of a note in a given scale.
+A C<Music::ScaleNote> object manipulates the position of a note in a scale.
 
 Given a scale, a starting note, a scale note, and a scale position offset, this
 module computes the new note.

@@ -134,7 +134,7 @@ sub get_offset {
 
     my $rev;  # Going in reverse?
 
-    my $note  = Music::Note->new( $args{note_name}, $args{note_format} );
+    my $note = Music::Note->new( $args{note_name}, $args{note_format} );
 
     my $equiv;
     if ( $note->format('isobase') =~ /b/ || $note->format('isobase') =~ /#/ ) {

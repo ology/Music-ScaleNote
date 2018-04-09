@@ -182,6 +182,7 @@ sub get_offset {
     }
 
     $note = Music::Note->new( $scale[ $args{offset} % @scale ] . $octave, 'ISO' );
+
     warn sprintf "\tNew offset: %d, ISO: %s, Formatted: %s\n",
         $args{offset}, $note->format('ISO'), $note->format($args{note_format})
         if $self->verbose;

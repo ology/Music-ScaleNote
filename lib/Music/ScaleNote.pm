@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0303';
+our $VERSION = '0.0400';
 
 use Carp;
 use Moo;
@@ -17,16 +17,15 @@ use Music::Scales;
 
   use Music::ScaleNote;
   use Music::Note;
+
   my $msn = Music::ScaleNote->new(
     scale_note => 'C',
     scale_name => 'pminor',
     verbose    => 1,
   );
-  my $note = $msn->get_offset(
-    note_name   => 'C4',
-    note_format => 'ISO',
-    offset      => 1,
-  );
+
+  my $note = $msn->get_offset( note_name => 'C4' );
+
   print $note->format('ISO'), "\n"; # D#4
 
 
@@ -34,13 +33,18 @@ use Music::Scales;
 
 A C<Music::ScaleNote> object manipulates the position of a note in a scale.
 
-Given a scale, a starting note, a scale note, and a scale position offset, this
-module computes the new note.
+Given a B<scale_name>, a B<scale_note>, a starting B<note_name>, the
+B<note_format>, and a scale position B<offset>, this module computes the new
+note.
 
-So for scale C<C D# F G A#> (C pentatonic minor), note C<C4>, and offset C<1>
-(move one note to the right), this module will return C<D#4>.
+So for scale C<C D# F G A#> (C pentatonic minor), note name C<C4> (given the
+ISO format), and offset C<1> (move one note to the right), this module will
+return C<D#4>.
 
 For offset C<-1>, C<A#3> is returned.
+
+The B<note_format> determines how the B<note_name> is given, and the default is
+C<ISO>.
 
 =head1 ATTRIBUTES
 
@@ -48,7 +52,7 @@ For offset C<-1>, C<A#3> is returned.
 
 This is the name of the note that starts the given scale.
 
-Default: C
+Default: C<C>
 
 =cut
 
@@ -63,7 +67,7 @@ This is the name of the scale to use.
 
 Please see L<Music::Scales/SCALES> for the possible names.
 
-Default: major
+Default: C<major>
 
 =cut
 
@@ -77,10 +81,13 @@ has scale_name => (
 The format as given by L<Music::Note/STYLES>.  If given in the constructor, this
 is used as the default in the B<get_offset> method.
 
+Default: C<ISO>
+
 =cut
 
 has note_format => (
-    is => 'ro',
+    is      => 'ro',
+    default => sub { 'ISO' },
 );
 
 =head2 offset
@@ -88,16 +95,21 @@ has note_format => (
 The integer offset of a new scale position.  If given in the constructor, this
 is used as the default in the B<get_offset> method.
 
+Default: C<1>
+
 =cut
 
 has offset => (
-    is  => 'ro',
-    isa => sub { die 'Not an integer' unless $_[0] =~ /^\d+$/ },
+    is      => 'ro',
+    isa     => sub { die 'Not an integer' unless $_[0] =~ /^\d+$/ },
+    default => sub { 1 },
 );
 
 =head2 verbose
 
 Show the progress of the B<get_offset> method.
+
+Default: C<0>
 
 =cut
 

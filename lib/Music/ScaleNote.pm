@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0400';
+our $VERSION = '0.0401';
 
 use Carp;
 use Moo;
@@ -122,13 +122,23 @@ has verbose => (
 
 =head2 new()
 
-  $msn = Music::ScaleNote->new(%arguments);
+  $msn = Music::ScaleNote->new(
+    scale_note  => $scale_start_note,
+    scale_name  => $scale_name,
+    verbose     => $boolean,
+    note_format => $format,
+    offset      => $integer,
+  );
 
 Create a new C<Music::ScaleNote> object.
 
 =head2 get_offset()
 
-  $note = $msn->get_offset(%arguments);
+  $note = $msn->get_offset(
+    note_name   => $formatted_note_name,
+    note_format => $format,
+    offset      => $integer,
+  );
 
 Return a new L<Music::Note> object based on the given B<note_name>,
 B<note_format> and B<offset>.

@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0401';
+our $VERSION = '0.0500';
 
 use Carp;
 use Moo;
@@ -101,7 +101,7 @@ Default: C<1>
 
 has offset => (
     is      => 'ro',
-    isa     => sub { die 'Not an integer' unless $_[0] =~ /^\d+$/ },
+    isa     => sub { die 'Not a negative or positive integer' unless $_[0] =~ /^-?\d+$/ },
     default => sub { 1 },
 );
 

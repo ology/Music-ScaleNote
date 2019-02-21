@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0500';
+our $VERSION = '0.0501';
 
 use Carp;
 use Moo;
@@ -135,7 +135,7 @@ Create a new C<Music::ScaleNote> object.
 =head2 get_offset()
 
   $note = $msn->get_offset(
-    note_name   => $formatted_note_name,
+    note_name   => $note,
     note_format => $format,
     offset      => $integer,
   );
@@ -223,5 +223,11 @@ L<List::Util>
 L<Music::Note>
 
 L<Music::Scales>
+
+Example usage:
+
+L<https://github.com/ology/Music/blob/master/hilbert-notes>
+
+L<https://github.com/ology/Music/blob/master/lindenmayer-midi>
 
 =cut

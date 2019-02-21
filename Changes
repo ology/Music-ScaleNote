@@ -1,6 +1,8 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Improve documentation.
+    - Add test cases.
 
 0.0500 2019-01-06 20:17:00
     - Fix the offset isa regex.

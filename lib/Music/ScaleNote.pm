@@ -16,7 +16,6 @@ use Music::Scales;
 =head1 SYNOPSIS
 
   use Music::ScaleNote;
-  use Music::Note;
 
   my $msn = Music::ScaleNote->new(
     scale_note => 'C',

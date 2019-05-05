@@ -37,8 +37,8 @@ B<note_format>, and a scale position B<offset>, this module computes the new
 note.
 
 So for scale C<C D# F G A#> (C pentatonic minor), note name C<C4> (given the
-ISO format), and offset C<1> (move one note to the right), this module will
-return C<D#4>.
+ISO format), and offset C<1> (move one scale step to the right), this module
+will return C<D#4>.
 
 For offset C<-1>, C<A#3> is returned.
 

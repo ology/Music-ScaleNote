@@ -10,10 +10,8 @@ my $msn = Music::ScaleNote->new(
 );
 isa_ok $msn, 'Music::ScaleNote';
 
-my $x;
-
 my $format = 'midinum';
-$x = $msn->get_offset(
+my $x = $msn->get_offset(
     note_name   => 60,
     note_format => $format,
     offset      => 1,

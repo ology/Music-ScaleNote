@@ -29,17 +29,15 @@ $format = 'ISO';
 is $note->format($format), 'D#4', 'get_offset';
 
 $note = $msn->get_offset(
-    note_name   => 'D#4',
-    note_format => $format,
-    offset      => -1,
+    note_name => 'D#4',
+    offset    => -1,
 );
 isa_ok $note, 'Music::Note';
 is $note->format($format), 'C4', 'get_offset';
 
 $note = $msn->get_offset(
-    note_name   => 'D#',
-    note_format => $format,
-    offset      => -1,
+    note_name => 'D#',
+    offset    => -1,
 );
 isa_ok $note, 'Music::Note';
 is $note->format($format), 'C4', 'get_offset';

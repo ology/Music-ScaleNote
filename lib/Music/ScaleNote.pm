@@ -42,16 +42,16 @@ will return C<D#4>.
 
 For offset C<-1>, C<A#3> is returned.
 
-The B<note_format> determines how the B<note_name> is given, and the default is
-C<ISO>.
-
 =head1 ATTRIBUTES
 
 =head2 scale_note
 
-This is the name of the note that starts the given scale.
+This is the name of the note (with no octave) that starts the given
+scale.
 
 Default: C<C>
+
+Examples: C<G#>, C<Eb>
 
 =cut
 
@@ -119,9 +119,11 @@ has verbose => (
 
 =head1 METHODS
 
-=head2 new()
+=head2 new
 
-  $msn = Music::ScaleNote->new(
+  $msn = Music::ScaleNote->new;  # Use defaults
+
+  $msn = Music::ScaleNote->new(  # Override defaults
     scale_note  => $scale_start_note,
     scale_name  => $scale_name,
     verbose     => $boolean,
@@ -131,16 +133,29 @@ has verbose => (
 
 Create a new C<Music::ScaleNote> object.
 
-=head2 get_offset()
+=head2 get_offset
 
-  $note = $msn->get_offset(
+  $note = $msn->get_offset( note_name => $note );
+
+  $note = $msn->get_offset(  # Override defaults
     note_name   => $note,
     note_format => $format,
     offset      => $integer,
   );
 
-Return a new L<Music::Note> object based on the given B<note_name>,
-B<note_format> and B<offset>.
+Return a new L<Music::Note> object based on the required B<note_name>,
+and optional B<note_format> and B<offset> parameters.
+
+For formats of C<isobase>, C<ISO> and C<midi>, the B<note_name> can be
+given as a "bare note name" or a note-octave name.  But for the
+C<midinum> format, the B<note_name> must be given as a MIDI note
+number.
+
+Be aware that if the B<note_name> is given as a "bare note" (with no
+octave), and the B<format> is C<ISO>, the octave returned will be C<4>
+by default.  For B<format> of C<midinum> and the B<note_name> being a
+letter, a nonsensical result will be returned.  This mixing up of
+format and note name is B<not> how to use this module.
 
 =cut
 
@@ -214,6 +229,8 @@ sub get_offset {
 1;
 
 =head1 SEE ALSO
+
+The F<t/01-methods.t> file in this distribution.
 
 L<Moo>
 

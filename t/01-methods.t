@@ -14,10 +14,7 @@ my $msn = Music::ScaleNote->new(
 isa_ok $msn, 'Music::ScaleNote';
 
 throws_ok {
-    $msn->get_offset(
-        note_name   => 'Cs',
-        note_format => 'midi',
-    );
+    $msn->get_offset( note_name => 'C#' );
 } qr/not defined/, 'note not in scale';
 
 my $format = 'midinum';

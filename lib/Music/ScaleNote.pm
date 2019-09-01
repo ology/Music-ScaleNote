@@ -162,33 +162,34 @@ format and note name is B<not> how to use this module.
 sub get_offset {
     my ( $self, %args ) = @_;
 
-    $args{note_format} ||= $self->note_format;
-    $args{offset}      ||= $self->offset;
+    my $note_name   = $args{note_name};
+    my $note_format = $args{note_format} || $self->note_format;
+    my $offset      = $args{offset} || $self->offset;
 
     croak 'note_name, note_format or offset not provided'
-        unless $args{note_name} || $args{note_format} || $args{offset};
+        unless $note_name || $note_format || $offset;
 
     my $rev;  # Going in reverse?
 
-    my $note = Music::Note->new( $args{note_name}, $args{note_format} );
+    my $note = Music::Note->new( $note_name, $note_format );
 
     my $equiv;
     if ( $note->format('isobase') =~ /b/ || $note->format('isobase') =~ /#/ ) {
-        $equiv = Music::Note->new( $args{note_name}, $args{note_format} );
+        $equiv = Music::Note->new( $note_name, $note_format );
         $equiv->en_eq( $note->format('isobase') =~ /b/ ? 'sharp' : 'flat' );
     }
 
     warn sprintf "Given note: %s, ISO: %s/%s, Offset: %d\n",
-        $args{note_name}, $note->format('ISO'), ( $equiv ? $equiv->format('ISO') : '' ), $args{offset}
+        $note_name, $note->format('ISO'), ( $equiv ? $equiv->format('ISO') : '' ), $offset
         if $self->verbose;
 
     my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
     warn "\tScale: @scale\n"
         if $self->verbose;
 
-    if ( $args{offset} < 0 ) {
+    if ( $offset < 0 ) {
         $rev++;
-        $args{offset} = abs $args{offset};
+        $offset = abs $offset;
         @scale  = reverse @scale;
     }
 
@@ -201,14 +202,14 @@ sub get_offset {
     if ( defined $posn ) {
         warn sprintf "\tPosition: %d\n", $posn
             if $self->verbose;
-        $args{offset} += $posn;
+        $offset += $posn;
     }
     else {
         warn "Scale position not defined!\n";
     }
 
     my $octave = $note->octave;
-    my $factor = int( $args{offset} / @scale );
+    my $factor = int( $offset / @scale );
 
     if ( $rev ) {
         $octave -= $factor;
@@ -217,10 +218,10 @@ sub get_offset {
         $octave += $factor;
     }
 
-    $note = Music::Note->new( $scale[ $args{offset} % @scale ] . $octave, 'ISO' );
+    $note = Music::Note->new( $scale[ $offset % @scale ] . $octave, 'ISO' );
 
     warn sprintf "\tNew offset: %d, ISO: %s, Formatted: %s\n",
-        $args{offset}, $note->format('ISO'), $note->format( $args{note_format} )
+        $offset, $note->format('ISO'), $note->format($note_format)
         if $self->verbose;
 
     return $note;

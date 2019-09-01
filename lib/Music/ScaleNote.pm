@@ -249,9 +249,9 @@ sub get_offset {
 
 The F<t/01-methods.t> file in this distribution.
 
-L<Moo>
-
 L<List::Util>
+
+L<Moo>
 
 L<Music::Note>
 

@@ -29,8 +29,8 @@ use namespace::clean;
   print $note->format('ISO'), "\n"; # D#4
 
   $msn = Music::ScaleNote->new(
-    scale_note  => 'C',
-    scale_name  => 'major',
+    scale_note => 'C',
+    scale_name => 'major',
   );
 
   $note = $msn->get_offset(

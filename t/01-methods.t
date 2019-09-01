@@ -15,7 +15,7 @@ isa_ok $msn, 'Music::ScaleNote';
 
 throws_ok {
     $msn->get_offset( note_name => 'C#' );
-} qr/Scale position not defined/, 'note not in scale';
+} qr/Scale position not defined/, 'note_name not in scale';
 
 my $format = 'midinum';
 my $note = $msn->get_offset(

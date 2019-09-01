@@ -17,7 +17,6 @@ throws_ok {
     $msn->get_offset(
         note_name   => 'Cs',
         note_format => 'midi',
-        offset      => -1,
     );
 } qr/not defined/, 'note not in scale';
 

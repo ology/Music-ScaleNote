@@ -5,9 +5,8 @@ package Music::ScaleNote;
 our $VERSION = '0.0503';
 
 use Carp;
-use Moo;
-
 use List::Util qw( first );
+use Moo;
 use Music::Note;
 use Music::Scales;
 

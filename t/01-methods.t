@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Exception;
 
 use_ok 'Music::ScaleNote';
 
@@ -11,6 +12,14 @@ my $msn = Music::ScaleNote->new(
 #    verbose    => 1,
 );
 isa_ok $msn, 'Music::ScaleNote';
+
+throws_ok {
+    $msn->get_offset(
+        note_name   => 'Cs',
+        note_format => 'midi',
+        offset      => -1,
+    );
+} qr/not defined/, 'note not in scale';
 
 my $format = 'midinum';
 my $note = $msn->get_offset(

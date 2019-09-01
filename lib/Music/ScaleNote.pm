@@ -46,7 +46,7 @@ For offset C<-1>, C<A#3> is returned.
 
 =head2 scale_note
 
-This is the name of the note (with no octave) that starts the given
+This is the isobase name of the note (with no octave) that starts the
 scale.
 
 Default: C<C>
@@ -64,7 +64,7 @@ has scale_note => (
 
 This is the name of the scale to use.
 
-Please see L<Music::Scales/SCALES> for the possible names.
+Please see L<Music::Scales/SCALES> for the possiblities.
 
 Default: C<major>
 
@@ -77,10 +77,13 @@ has scale_name => (
 
 =head2 note_format
 
-The format as given by L<Music::Note/STYLES>.  If given in the constructor, this
-is used as the default in the B<get_offset> method.
+The format as given by L<Music::Note/STYLES>.  If set in the
+constructor, this is used in the B<get_offset> method.
 
 Default: C<ISO>
+
+This is used in conjunction with the B<note_name> to determine the
+L<Music::Note> in the B<get_offset> method.
 
 =cut
 
@@ -91,8 +94,8 @@ has note_format => (
 
 =head2 offset
 
-The integer offset of a new scale position.  If given in the constructor, this
-is used as the default in the B<get_offset> method.
+The integer offset of a new scale position.  If set in the
+constructor, this is used in the B<get_offset> method.
 
 Default: C<1>
 

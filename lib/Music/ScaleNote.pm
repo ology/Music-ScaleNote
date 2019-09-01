@@ -18,15 +18,25 @@ use namespace::clean;
   use Music::ScaleNote;
 
   my $msn = Music::ScaleNote->new(
-    scale_note => 'C',
-    scale_name => 'pminor',
-    verbose    => 1,
+    scale_note  => 'C',
+    scale_name  => 'pminor',
+    note_format => 'ISO',
+    offset      => 1,
+    verbose     => 1,
   );
 
   my $note = $msn->get_offset( note_name => 'C4' );
-
   print $note->format('ISO'), "\n"; # D#4
 
+  $msn = Music::ScaleNote->new(
+    scale_note  => 'C',
+    scale_name  => 'major',
+    note_format => 'midinum',
+    offset      => -1,
+    verbose     => 1,
+  );
+  $note = $msn->get_offset( note_name => 60 );
+  print $note->format('midinum'), "\n"; # 59
 
 =head1 DESCRIPTION
 

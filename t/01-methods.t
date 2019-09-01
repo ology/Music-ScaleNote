@@ -16,7 +16,6 @@ my $format = 'midinum';
 my $note = $msn->get_offset(
     note_name   => 60,
     note_format => $format,
-    offset      => 1,
 );
 isa_ok $note, 'Music::Note';
 is $note->format($format), 63, 'get_offset';

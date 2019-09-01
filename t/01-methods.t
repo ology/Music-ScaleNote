@@ -33,7 +33,41 @@ $x = $msn->get_offset(
 isa_ok $x, 'Music::Note';
 is $x->format($format), 'C4', 'get_offset';
 
+$x = $msn->get_offset(
+    note_name   => 'D#',
+    note_format => $format,
+    offset      => -1,
+);
+isa_ok $x, 'Music::Note';
+is $x->format($format), 'C4', 'get_offset';
+
 $format = 'midinum';
 is $x->format($format), 60, 'get_offset';
+
+$format = 'isobase';
+$x = $msn->get_offset(
+    note_name   => 'D#',
+    note_format => $format,
+    offset      => -1,
+);
+isa_ok $x, 'Music::Note';
+is $x->format($format), 'C', 'get_offset';
+
+$format = 'midi';
+$x = $msn->get_offset(
+    note_name   => 'C',
+    note_format => $format,
+    offset      => -1,
+);
+isa_ok $x, 'Music::Note';
+is $x->format($format), 'As3', 'get_offset';
+
+$format = 'midinum';
+$x = $msn->get_offset(
+    note_name   => 60,
+    note_format => $format,
+);
+isa_ok $x, 'Music::Note';
+is $x->format($format), 63, 'get_offset';
 
 done_testing();

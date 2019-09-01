@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0504';
+our $VERSION = '0.0505';
 
 use Carp;
 use List::Util qw( first );
@@ -42,15 +42,16 @@ use namespace::clean;
 
 =head1 DESCRIPTION
 
-A C<Music::ScaleNote> object manipulates the position of a note in a scale.
+A C<Music::ScaleNote> object manipulates the position of a note in a
+scale.
 
 Given a B<scale_name>, a B<scale_note>, a starting B<note_name>, the
-B<note_format>, and a scale position B<offset>, this module computes the new
-note.
+B<note_format>, and a scale position B<offset>, the new note is
+computed.
 
-So for scale C<C D# F G A#> (C pentatonic minor), note name C<C4> (given the
-ISO format), and offset C<1> (move one scale step to the right), this module
-will return C<D#4>.
+So for scale C<C D# F G A#> (C pentatonic minor), note name C<C4>
+(given the ISO format), and offset C<1> (move one scale step to the
+right), the note C<D#4> is returned.
 
 For offset of C<-1>, the note C<A#3> is returned.
 

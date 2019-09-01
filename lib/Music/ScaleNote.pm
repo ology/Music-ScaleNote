@@ -81,6 +81,8 @@ Please see L<Music::Scales/SCALES> for the possibilities.
 
 Default: C<major>
 
+If the B<scale_name> is not recognized, the default is used.
+
 =cut
 
 has scale_name => (
@@ -94,6 +96,8 @@ The format as given by L<Music::Note/STYLES>.  If set in the
 constructor, this is used in the B<get_offset> method.
 
 Default: C<ISO>
+
+If the B<note_format> is not recognized, the default is used.
 
 This is used in conjunction with the B<note_name> to determine the
 L<Music::Note> in the B<get_offset> method.
@@ -161,6 +165,8 @@ Create a new C<Music::ScaleNote> object.
 
 Return a new L<Music::Note> object based on the required B<note_name>,
 and optional B<note_format> and B<offset> parameters.
+
+If the B<note_name> is not recognized, a default of C<C> is used.
 
 For formats of C<isobase>, C<ISO> and C<midi>, the B<note_name> can be
 given as a "bare note name" or a note-octave name.  But for the

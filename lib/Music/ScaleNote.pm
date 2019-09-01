@@ -53,7 +53,7 @@ So for scale C<C D# F G A#> (C pentatonic minor), note name C<C4>
 (given the ISO format), and offset C<1> (move one scale step to the
 right), the note C<D#4> is returned.
 
-For offset of C<-1>, the note C<A#3> is returned.
+For an offset of C<-1>, the note C<A#3> is returned.
 
 =head1 ATTRIBUTES
 

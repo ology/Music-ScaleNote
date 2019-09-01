@@ -221,7 +221,7 @@ sub get_offset {
         $offset += $posn;
     }
     else {
-        warn "Scale position not defined!\n";
+        croak 'Scale position not defined!';
     }
 
     my $octave = $note->octave;

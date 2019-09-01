@@ -6,12 +6,13 @@ our $VERSION = '0.0503';
 
 use Carp;
 use Moo;
-use strictures 2;
-use namespace::clean;
 
 use List::Util qw( first );
 use Music::Note;
 use Music::Scales;
+
+use strictures 2;
+use namespace::clean;
 
 =head1 SYNOPSIS
 

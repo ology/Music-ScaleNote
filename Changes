@@ -1,7 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
-    - Clean-up code.
+    - Clean-up code and test.
     - Croak on an undefined scale position.
 
 0.0505 2019-09-01 05:13:17

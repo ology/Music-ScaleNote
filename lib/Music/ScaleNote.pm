@@ -31,11 +31,13 @@ use namespace::clean;
   $msn = Music::ScaleNote->new(
     scale_note  => 'C',
     scale_name  => 'major',
+  );
+
+  $note = $msn->get_offset(
+    note_name   => 60,
     note_format => 'midinum',
     offset      => -1,
-    verbose     => 1,
   );
-  $note = $msn->get_offset( note_name => 60 );
   print $note->format('midinum'), "\n"; # 59
 
 =head1 DESCRIPTION

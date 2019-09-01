@@ -236,8 +236,8 @@ sub get_offset {
 
     $note = Music::Note->new( $scale[ $offset % @scale ] . $octave, 'ISO' );
 
-    warn sprintf "\tNew offset: %d, ISO: %s, Formatted: %s\n",
-        $offset, $note->format('ISO'), $note->format($format)
+    warn sprintf "\tNew offset: %d, octave: %d, ISO: %s, Formatted: %s\n",
+        $offset, $octave, $note->format('ISO'), $note->format($format)
         if $self->verbose;
 
     return $note;

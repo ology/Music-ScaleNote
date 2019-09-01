@@ -64,7 +64,7 @@ has scale_note => (
 
 This is the name of the scale to use.
 
-Please see L<Music::Scales/SCALES> for the possiblities.
+Please see L<Music::Scales/SCALES> for the possibilities.
 
 Default: C<major>
 

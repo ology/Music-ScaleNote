@@ -1,6 +1,9 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Clean-up code.
+
+0.0505 2019-09-01 05:13:17
     - Improve SYNOPSIS.
     - Improve documentation again.
 

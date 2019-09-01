@@ -65,12 +65,4 @@ $note = $msn->get_offset(
 isa_ok $note, 'Music::Note';
 is $note->format($format), 'As3', 'get_offset';
 
-$format = 'midinum';
-$note = $msn->get_offset(
-    note_name   => 60,
-    note_format => $format,
-);
-isa_ok $note, 'Music::Note';
-is $note->format($format), 63, 'get_offset';
-
 done_testing();

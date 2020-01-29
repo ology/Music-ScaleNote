@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0507';
+our $VERSION = '0.0600';
 
 use Carp;
 use List::Util qw( first );
@@ -40,6 +40,12 @@ use namespace::clean;
   );
   print $note->format('midinum'), "\n"; # 59
 
+  $note = $msn->step(
+    note_name => 'D3',
+    steps     => -1,
+  );
+  print $note->format('ISO'), "\n"; # Db3
+
 =head1 DESCRIPTION
 
 A C<Music::ScaleNote> object manipulates the position of a note in a
@@ -54,6 +60,9 @@ So for scale C<C D# F G A#> (C pentatonic minor), note name C<C4>
 the note C<D#4> is returned.
 
 For an offset of C<-1>, the note C<A#3> is returned.
+
+This module also provides a C<step> method that returns the new note a
+given number of half-B<steps> away from a given B<note_name>.
 
 =head1 ATTRIBUTES
 
@@ -155,10 +164,10 @@ Create a new C<Music::ScaleNote> object.
 
 =head2 get_offset
 
-  $note = $msn->get_offset( note_name => $note );
+  $note = $msn->get_offset( note_name => $note_name );
 
   $note = $msn->get_offset(  # Override defaults
-    note_name   => $note,
+    note_name   => $note_name,
     note_format => $format,
     offset      => $integer,
   );
@@ -245,6 +254,39 @@ sub get_offset {
     warn sprintf "\tNew offset: %d, octave: %d, ISO: %s, Formatted: %s\n",
         $offset, $octave, $note->format('ISO'), $note->format($format)
         if $self->verbose;
+
+    return $note;
+}
+
+=head2 step
+
+  $note = $msn->step( note_name => $note_name );
+
+  $note = $msn->step(
+    note_name => $note_name,
+    steps     => $halfsteps,
+  );
+
+Return a new L<Music::Note> object based on the required B<note_name>
+and number of half-B<steps> - either a positive or negative integer.
+
+Default steps: 1
+
+=cut
+
+sub step {
+    my ( $self, %args ) = @_;
+
+    my $name  = $args{note_name};
+    my $steps = $args{steps} || 1;
+
+    croak 'note_name not provided'
+        unless $name;
+
+    my $note = Music::Note->new( $name, $self->note_format );
+    my $num  = $note->format('midinum');
+    $num += $steps;
+    $note = Music::Note->new( $num, 'midinum' );
 
     return $note;
 }

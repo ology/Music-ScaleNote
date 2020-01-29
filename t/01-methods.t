@@ -63,6 +63,25 @@ $note = $msn->get_offset(
 isa_ok $note, 'Music::Note';
 is $note->format($format), 'As3', 'get_offset';
 
+$note = $msn->step( note_name => 'C' );
+isa_ok $note, 'Music::Note';
+is $note->format($format), 'Cs4', 'step';
+
+$note = $msn->step(
+    note_name => 'C',
+    steps     => -1,
+);
+isa_ok $note, 'Music::Note';
+is $note->format($format), 'B3', 'step';
+
+$format = 'midinum';
+$note = $msn->step(
+    note_name => 60,
+    steps     => 2,
+);
+isa_ok $note, 'Music::Note';
+is $note->format($format), 62, 'step';
+
 $msn = Music::ScaleNote->new( scale_note => 'X' );
 isa_ok $msn, 'Music::ScaleNote';
 

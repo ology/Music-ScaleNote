@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Add the ->step method to compute halfstep notes.
 
 0.0507 2019-09-01 14:47:22
     - Improve documentation.

@@ -75,12 +75,18 @@ isa_ok $note, 'Music::Note';
 is $note->format($format), 'B3', 'step';
 
 $format = 'midinum';
+$msn = Music::ScaleNote->new(
+    scale_note  => 'D',
+    note_format => $format,
+);
+isa_ok $msn, 'Music::ScaleNote';
+
 $note = $msn->step(
-    note_name => 60,
+    note_name => 62,
     steps     => 2,
 );
 isa_ok $note, 'Music::Note';
-is $note->format($format), 62, 'step';
+is $note->format($format), 64, 'step';
 
 $msn = Music::ScaleNote->new( scale_note => 'X' );
 isa_ok $msn, 'Music::ScaleNote';

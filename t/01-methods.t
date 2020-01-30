@@ -102,6 +102,7 @@ $format = 'midinum';
 $msn = Music::ScaleNote->new(
     scale_note  => 'D',
     note_format => $format,
+#    verbose     => 1,
 );
 isa_ok $msn, 'Music::ScaleNote';
 

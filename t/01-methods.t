@@ -19,14 +19,14 @@ throws_ok {
 
 my $format = 'midinum';
 my $note = $msn->get_offset(
-    note_name   => 60,
+    note_name   => 63,
     note_format => $format,
 );
 isa_ok $note, 'Music::Note';
-is $note->format($format), 63, 'get_offset';
+is $note->format($format), 65, 'get_offset';
 
 $format = 'ISO';
-is $note->format($format), 'D#4', 'get_offset';
+is $note->format($format), 'F4', 'get_offset';
 
 $note = $msn->get_offset(
     note_name => 'D#4',

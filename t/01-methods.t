@@ -28,6 +28,15 @@ is $note->format($format), 65, 'get_offset';
 $format = 'ISO';
 is $note->format($format), 'F4', 'get_offset';
 
+$format = 'midinum';
+$note = $msn->get_offset(
+    note_name   => 60,
+    note_format => $format,
+    offset      => -1,
+);
+is $note->format($format), 58, 'get_offset';
+
+$format = 'ISO';
 $note = $msn->get_offset(
     note_name => 'D#4',
     offset    => -1,

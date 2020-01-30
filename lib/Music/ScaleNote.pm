@@ -309,6 +309,11 @@ sub step {
 
     my $note = Music::Note->new( $name, $self->note_format );
     my $num  = $note->format('midinum');
+
+    warn sprintf "Given note: %s, ISO: %s, Formatted: %d\n",
+        $name, $note->format('ISO'), $num
+        if $self->verbose;
+
     $num += $steps;
     $note = Music::Note->new( $num, 'midinum' );
 

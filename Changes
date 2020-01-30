@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Add functionality to convert a sharp note to its flat enharmonic equivalent.
 
 0.0600 2020-01-29 12:33:12
     - Add the ->step method to compute halfstep notes.

@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0600';
+our $VERSION = '0.0700';
 
 use Carp;
 use List::Util qw( first );
@@ -43,6 +43,7 @@ use namespace::clean;
   $note = $msn->step(
     note_name => 'D3',
     steps     => -1,
+    flat      => 1,
   );
   print $note->format('ISO'), "\n"; # Db3
 
@@ -133,6 +134,20 @@ has offset => (
     default => sub { 1 },
 );
 
+=head2 flat
+
+Boolean indicating that we want a sharp resulting note flat instead.
+This exchanges a sharp note for its enharmonic equivalent flat.
+
+Default: C<0>
+
+=cut
+
+has flat => (
+    is      => 'ro',
+    default => sub { 0 },
+);
+
 =head2 verbose
 
 Show the progress of the B<get_offset> method.
@@ -158,6 +173,7 @@ has verbose => (
     verbose     => $boolean,
     note_format => $format,
     offset      => $integer,
+    flat        => $flat,
   );
 
 Create a new C<Music::ScaleNote> object.
@@ -170,6 +186,7 @@ Create a new C<Music::ScaleNote> object.
     note_name   => $note_name,
     note_format => $format,
     offset      => $integer,
+    flat        => $flat,
   );
 
 Return a new L<Music::Note> object based on the required B<note_name>,
@@ -196,6 +213,7 @@ sub get_offset {
     my $name   = $args{note_name};
     my $format = $args{note_format} || $self->note_format;
     my $offset = $args{offset} || $self->offset;
+    my $flat   = $args{flat} || $self->flat;
 
     croak 'note_name, note_format or offset not provided'
         unless $name || $format || $offset;
@@ -251,6 +269,10 @@ sub get_offset {
 
     $note = Music::Note->new( $scale[ $offset % @scale ] . $octave, 'ISO' );
 
+    if ( $flat && $note->format('isobase') =~ /#/ ) {
+        $note->en_eq('flat');
+    }
+
     warn sprintf "\tNew offset: %d, octave: %d, ISO: %s, Formatted: %s\n",
         $offset, $octave, $note->format('ISO'), $note->format($format)
         if $self->verbose;
@@ -265,6 +287,7 @@ sub get_offset {
   $note = $msn->step(
     note_name => $note_name,
     steps     => $halfsteps,
+    flat      => $flat,
   );
 
 Return a new L<Music::Note> object based on the required B<note_name>
@@ -279,6 +302,7 @@ sub step {
 
     my $name  = $args{note_name};
     my $steps = $args{steps} || 1;
+    my $flat  = $args{flat} || $self->flat;
 
     croak 'note_name not provided'
         unless $name;
@@ -287,6 +311,10 @@ sub step {
     my $num  = $note->format('midinum');
     $num += $steps;
     $note = Music::Note->new( $num, 'midinum' );
+
+    if ( $flat && $note->format('isobase') =~ /#/ ) {
+        $note->en_eq('flat');
+    }
 
     return $note;
 }

@@ -2,6 +2,7 @@ Revision history for Music-ScaleNote
 
 {{$NEXT}}
     - Add verbose warns to the ->step method.
+    - Make the test slightly more rigorous.
 
 0.0700 2020-01-29 20:53:39
     - Add functionality to convert a sharp note to its flat enharmonic equivalent.

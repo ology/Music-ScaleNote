@@ -18,10 +18,7 @@ throws_ok {
 } qr/Scale position not defined/, 'note_name not in scale';
 
 my $format = 'midinum';
-my $note = $msn->get_offset(
-    note_name   => 60,
-    note_format => $format,
-);
+my $note = $msn->get_offset( note_name => 60 );
 isa_ok $note, 'Music::Note';
 is $note->format($format), 63, 'get_offset';
 

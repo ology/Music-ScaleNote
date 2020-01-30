@@ -38,7 +38,7 @@ use namespace::clean;
     note_format => 'midinum',
     offset      => -1,
   );
-  print $note->format('midinum'), "\n"; # 59
+  print $note->format('midinum'), "\n"; # 58
 
   $note = $msn->step(
     note_name => 'D3',

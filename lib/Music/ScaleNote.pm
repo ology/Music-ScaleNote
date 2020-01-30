@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0701';
+our $VERSION = '0.0702';
 
 use Carp;
 use List::Util qw( first );

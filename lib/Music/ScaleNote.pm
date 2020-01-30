@@ -316,6 +316,10 @@ sub step {
         $note->en_eq('flat');
     }
 
+    warn sprintf "\tNew steps: %d, ISO: %s, Formatted: %s\n",
+        $steps, $note->format('ISO'), $note->format( $self->note_format )
+        if $self->verbose;
+
     return $note;
 }
 

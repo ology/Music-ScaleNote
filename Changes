@@ -1,6 +1,10 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Fix crucial SYNOPSIS typo. :(
+    - Add a test for said typo.
+
+0.0701 2020-01-29 22:13:22
     - Add verbose warns to the ->step method.
     - Make the test slightly more rigorous.
 

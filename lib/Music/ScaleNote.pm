@@ -228,12 +228,12 @@ sub get_offset {
         $equiv->en_eq( $note->format('isobase') =~ /b/ ? 'sharp' : 'flat' );
     }
 
-    warn sprintf "Given note: %s, ISO: %s/%s, Offset: %d\n",
+    printf "Given note: %s, ISO: %s/%s, Offset: %d\n",
         $name, $note->format('ISO'), ( $equiv ? $equiv->format('ISO') : '' ), $offset
         if $self->verbose;
 
     my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
-    warn "\tScale: @scale\n"
+    print "\tScale: @scale\n"
         if $self->verbose;
 
     if ( $offset < 0 ) {
@@ -249,7 +249,7 @@ sub get_offset {
     } 0 .. $#scale;
 
     if ( defined $posn ) {
-        warn sprintf "\tPosition: %d\n", $posn
+        printf "\tPosition: %d\n", $posn
             if $self->verbose;
         $offset += $posn;
     }
@@ -273,7 +273,7 @@ sub get_offset {
         $note->en_eq('flat');
     }
 
-    warn sprintf "\tNew offset: %d, octave: %d, ISO: %s, Formatted: %s\n",
+    printf "\tNew offset: %d, octave: %d, ISO: %s, Formatted: %s\n",
         $offset, $octave, $note->format('ISO'), $note->format($format)
         if $self->verbose;
 
@@ -310,7 +310,7 @@ sub step {
     my $note = Music::Note->new( $name, $self->note_format );
     my $num  = $note->format('midinum');
 
-    warn sprintf "Given note: %s, ISO: %s, Formatted: %d\n",
+    printf "Given note: %s, ISO: %s, Formatted: %d\n",
         $name, $note->format('ISO'), $num
         if $self->verbose;
 
@@ -321,7 +321,7 @@ sub step {
         $note->en_eq('flat');
     }
 
-    warn sprintf "\tNew steps: %d, ISO: %s, Formatted: %s\n",
+    printf "\tNew steps: %d, ISO: %s, Formatted: %s\n",
         $steps, $note->format('ISO'), $note->format( $self->note_format )
         if $self->verbose;
 

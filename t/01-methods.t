@@ -32,14 +32,12 @@ $note = $msn->get_offset(
     note_name => 'D#4',
     offset    => -1,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 'C4', 'get_offset';
 
 $note = $msn->get_offset(
     note_name => 'D#',
     offset    => -1,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 'C4', 'get_offset';
 
 $format = 'midinum';
@@ -51,7 +49,6 @@ $note = $msn->get_offset(
     note_format => $format,
     offset      => -1,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 'C', 'get_offset';
 
 $format = 'midi';
@@ -61,7 +58,6 @@ $note = $msn->get_offset(
     offset      => -1,
     flat        => 1,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 'Bf3', 'get_offset';
 
 $note = $msn->step( note_name => 'C' );
@@ -72,14 +68,12 @@ $note = $msn->step(
     note_name => 'C',
     steps     => -1,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 'B3', 'step';
 
 $note = $msn->step(
     note_name => 'D4',
     steps     => -1,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 'Cs4', 'step';
 
 $note = $msn->step(
@@ -87,7 +81,6 @@ $note = $msn->step(
     steps     => -1,
     flat      => 1,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 'Df4', 'step';
 
 $note = $msn->step(
@@ -95,7 +88,6 @@ $note = $msn->step(
     steps     => -2,
     flat      => 1,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 'C4', 'step';
 
 $format = 'midinum';
@@ -104,17 +96,14 @@ $msn = Music::ScaleNote->new(
     note_format => $format,
 #    verbose     => 1,
 );
-isa_ok $msn, 'Music::ScaleNote';
 
 $note = $msn->step(
     note_name => 62,
     steps     => 2,
 );
-isa_ok $note, 'Music::Note';
 is $note->format($format), 64, 'step';
 
 $msn = Music::ScaleNote->new( scale_note => 'X' );
-isa_ok $msn, 'Music::ScaleNote';
 
 throws_ok {
     $msn->get_offset;

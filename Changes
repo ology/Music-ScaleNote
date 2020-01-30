@@ -1,7 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
-    - Call print, not warn if verbose.
+    - Call print, not warn when verbose.
 
 0.0702 2020-01-29 22:26:57
     - Fix crucial SYNOPSIS typo. :(

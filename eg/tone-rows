@@ -35,18 +35,18 @@ for my $note (@notes) {
             note_name => $note,
             offset    => $i * $col_offset,
         );
-        printf '%-*s ', $width, $n->format('isobase');
+        printf '%-*s  ', $width, $n->format('isobase');
     }
 
     ($name = $note) =~ s/\d+//;
-    printf '%-*s ', $width, $name;
+    printf '%-*s  ', $width, $name;
 
     for my $i (1 .. 4) {
         my $n = $msn->get_offset(
             note_name => $note,
             offset    => $i * $col_offset,
         );
-        printf '%-*s ', $width, $n->format('isobase');
+        printf '%-*s  ', $width, $n->format('isobase');
     }
 
     print "\n";

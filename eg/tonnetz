@@ -12,8 +12,6 @@ my $msn = Music::ScaleNote->new(
 );
 
 my $note_name = 'C4';
-my $row = 0;
-my $width = 2;
 
 # compute the row notes
 my @notes = ($note_name);
@@ -26,6 +24,9 @@ for my $i (1 .. 5) {
     $name = $n->format('ISO');
     push @notes, $name;
 }
+
+my $row = 0;
+my $width = 2;
 
 for my $note (@notes) {
     $row++;

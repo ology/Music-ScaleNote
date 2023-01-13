@@ -15,9 +15,9 @@ my $msn = Music::ScaleNote->new(
 my $row = 0;
 my $width = 2;
 
+# compute the row notes
 my @notes = ($note_name);
 my $name = $note_name;
-
 for my $i (1 .. 4) {
     my $n = $msn->get_offset(
         note_name => $name,

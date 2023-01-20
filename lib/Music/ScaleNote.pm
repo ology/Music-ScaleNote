@@ -24,7 +24,7 @@ use namespace::clean;
     verbose     => 1,
   );
 
-  my $note = $msn->get_offset( note_name => 'C4' );
+  my $note = $msn->get_offset(note_name => 'C4');
   say $note->format('ISO'); # D#4
 
   $msn = Music::ScaleNote->new(

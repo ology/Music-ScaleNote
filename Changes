@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Add the eg/tonnetz program.
 
 0.0704 2022-10-23 13:02:27
     - Avoid implicit imports.

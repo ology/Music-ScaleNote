@@ -25,7 +25,7 @@ use namespace::clean;
   );
 
   my $note = $msn->get_offset( note_name => 'C4' );
-  print $note->format('ISO'), "\n"; # D#4
+  say $note->format('ISO'); # D#4
 
   $msn = Music::ScaleNote->new(
     scale_note => 'C',
@@ -37,14 +37,14 @@ use namespace::clean;
     note_format => 'midinum',
     offset      => -1,
   );
-  print $note->format('midinum'), "\n"; # 58
+  say $note->format('midinum'); # 58
 
   $note = $msn->step(
     note_name => 'D3',
     steps     => -1,
     flat      => 1,
   );
-  print $note->format('ISO'), "\n"; # Db3
+  say $note->format('ISO'); # Db3
 
 =head1 DESCRIPTION
 

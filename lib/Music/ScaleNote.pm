@@ -4,10 +4,10 @@ package Music::ScaleNote;
 
 our $VERSION = '0.0704';
 
+use Moo;
 use strictures 2;
 use Carp qw(croak);
 use List::Util qw( first );
-use Moo;
 use Music::Note ();
 use Music::Scales qw(get_scale_notes);
 use namespace::clean;

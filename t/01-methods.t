@@ -7,11 +7,10 @@ use Test::Exception;
 
 use_ok 'Music::ScaleNote';
 
-my $msn = Music::ScaleNote->new(
+my $msn = new_ok 'Music::ScaleNote' => [
     scale_name => 'pminor',
 #    verbose    => 1,
-);
-isa_ok $msn, 'Music::ScaleNote';
+];
 
 throws_ok {
     $msn->get_offset( note_name => 'C#' );
@@ -100,11 +99,11 @@ $note = $msn->step(
 is $note->format($format), 'C4', 'step';
 
 $format = 'midinum';
-$msn = Music::ScaleNote->new(
+$msn = new_ok 'Music::ScaleNote' => [
     scale_note  => 'D',
     note_format => $format,
 #    verbose     => 1,
-);
+];
 
 $note = $msn->step(
     note_name => 62,
@@ -112,7 +111,7 @@ $note = $msn->step(
 );
 is $note->format($format), 64, 'step';
 
-$msn = Music::ScaleNote->new( scale_note => 'X' );
+$msn = new_ok 'Music::ScaleNote' => [ scale_note => 'X' ];
 
 throws_ok {
     $msn->get_offset;

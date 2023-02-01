@@ -51,3 +51,11 @@ for my $note (@notes) {
     print "\n";
     print ' ' x ($row * $width);
 }
+
+__END__
+G#  D#  A#  F   C   G   D   A   E   
+  C   G   D   A   E   B   F#  C#  G#  
+    E   B   F#  C#  G#  D#  A#  F   C   
+      G#  D#  A#  F   C   G   D   A   E   
+        C   G   D   A   E   B   F#  C#  G#  
+          E   B   F#  C#  G#  D#  A#  F   C

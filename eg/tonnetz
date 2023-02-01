@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 
+use lib map { "$ENV{HOME}/sandbox/$_/lib" } qw(Music-ScaleNote);
 use Music::ScaleNote ();
 
 my $row_offset = shift || 4; # major 3rd

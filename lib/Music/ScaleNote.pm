@@ -135,8 +135,7 @@ has offset => (
 
 =head2 flat
 
-Boolean indicating that we want a sharp resulting note flat instead.
-This exchanges a sharp note for its enharmonic equivalent flat.
+Boolean indicating that we want enharmonic flat notes, not sharps.
 
 Default: C<0>
 

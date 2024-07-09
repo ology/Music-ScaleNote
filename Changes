@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Use Array::Circular instead of ugly position gynmastics.
 
 0.0705 2023-01-20 00:05:31
     - Add the eg/tonnetz program.

@@ -7,7 +7,8 @@ our $VERSION = '0.0705';
 use Moo;
 use strictures 2;
 use Carp qw(croak);
-use List::Util qw( first );
+use Array::Circular ();
+use List::SomeUtils qw( first_index );
 use Music::Note ();
 use Music::Scales qw(get_scale_notes);
 use namespace::clean;
@@ -135,7 +136,7 @@ has offset => (
 
 =head2 flat
 
-Boolean indicating that we want enharmonic flat notes, not sharps.
+Boolean indicating that we want only flat notes, not sharps.
 
 Default: C<0>
 
@@ -216,63 +217,52 @@ sub get_offset {
     croak 'note_name, note_format or offset not provided'
         unless $name || $format || $offset;
 
-    my $rev;  # Going in reverse?
-
     my $note = Music::Note->new( $name, $format );
+    $note->en_eq('flat') if $flat && $note->format('isobase') =~ /#/;
 
-    my $equiv;
-    if ( $note->format('isobase') =~ /b/ || $note->format('isobase') =~ /#/ ) {
-        $equiv = Music::Note->new( $name, $format );
-        $equiv->en_eq( $note->format('isobase') =~ /b/ ? 'sharp' : 'flat' );
-    }
-
-    printf "Given note: %s, ISO: %s/%s, Offset: %d\n",
-        $name, $note->format('ISO'), ( $equiv ? $equiv->format('ISO') : '' ), $offset
+    printf "Given note: %s, Format: %s, ISO: %s, Offset: %d\n",
+        $name, $format, $note->format('ISO'), $offset
         if $self->verbose;
 
     my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
+    if ( $flat ) {
+        for ( @scale ) {
+            if ( $_ =~ /#/ ) {
+                my $equiv = Music::Note->new( $_, $format );
+                $equiv->en_eq('flat');
+                $_ = $equiv->format('isobase');
+            }
+        }
+    }
     print "\tScale: @scale\n"
         if $self->verbose;
 
-    if ( $offset < 0 ) {
-        $rev++;
-        $offset = abs $offset;
-        @scale  = reverse @scale;
-    }
+    my $ac = Array::Circular->new( @scale );
 
-    my $posn = first {
-        ( $scale[$_] eq $note->format('isobase') )
-        ||
-        ( $equiv && $scale[$_] eq $equiv->format('isobase') )
-    } 0 .. $#scale;
-
-    if ( defined $posn ) {
+    my $posn = first_index { $note->format('isobase') eq $_ } @scale;
+    if ( $posn >= 0 ) {
         printf "\tPosition: %d\n", $posn
             if $self->verbose;
-        $offset += $posn;
+        $ac->index( $posn );
     }
     else {
         croak 'Scale position not defined!';
     }
 
     my $octave = $note->octave;
-    my $factor = int( $offset / @scale );
 
-    if ( $rev ) {
-        $octave -= $factor;
+    if ( $offset > 0 ) {
+        $ac->next($offset);
     }
-    else {
-        $octave += $factor;
+    elsif ( $offset < 0 ) {
+        $ac->prev(abs $offset);
     }
+    $octave += $ac->loops;
 
-    $note = Music::Note->new( $scale[ $offset % @scale ] . $octave, 'ISO' );
+    $note = Music::Note->new( $ac->current . $octave, 'ISO' );
 
-    if ( $flat && $note->format('isobase') =~ /#/ ) {
-        $note->en_eq('flat');
-    }
-
-    printf "\tNew offset: %d, octave: %d, ISO: %s, Formatted: %s\n",
-        $offset, $octave, $note->format('ISO'), $note->format($format)
+    printf "\tOctave: %d, ISO: %s, Formatted: %s\n",
+        $octave, $note->format('ISO'), $note->format($format)
         if $self->verbose;
 
     return $note;
@@ -314,10 +304,7 @@ sub step {
 
     $num += $steps;
     $note = Music::Note->new( $num, 'midinum' );
-
-    if ( $flat && $note->format('isobase') =~ /#/ ) {
-        $note->en_eq('flat');
-    }
+    $note->en_eq('flat') if $flat && $note->format('isobase') =~ /#/;
 
     printf "\tNew steps: %d, ISO: %s, Formatted: %s\n",
         $steps, $note->format('ISO'), $note->format( $self->note_format )

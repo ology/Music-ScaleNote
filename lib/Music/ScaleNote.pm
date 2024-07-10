@@ -10,7 +10,7 @@ use Carp qw(croak);
 use Array::Circular ();
 use List::SomeUtils qw( first_index );
 use Music::Note ();
-use Music::Scales qw(get_scale_notes);
+use Music::Scales qw( get_scale_notes );
 use namespace::clean;
 
 =head1 SYNOPSIS

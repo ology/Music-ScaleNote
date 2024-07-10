@@ -249,14 +249,9 @@ sub get_offset {
         croak 'Scale position not defined!';
     }
 
-    my $octave = $note->octave;
+    $ac->next( $offset );
 
-    if ( $offset > 0 ) {
-        $ac->next($offset);
-    }
-    elsif ( $offset < 0 ) {
-        $ac->prev(abs $offset);
-    }
+    my $octave = $note->octave;
     $octave += $ac->loops;
 
     $note = Music::Note->new( $ac->current . $octave, 'ISO' );

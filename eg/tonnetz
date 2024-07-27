@@ -10,6 +10,8 @@ my $col_offset = shift || 7; # major 5th
 my $row_num    = shift || 6; # 
 my $col_num    = shift || 9; # 
 
+my $half_one = int ($col_num - 1) / 2;
+
 my $msn = Music::ScaleNote->new(
     scale_name => 'chromatic',
     flat       => 1,
@@ -28,8 +30,6 @@ for my $i (1 .. $row_num - 1) {
     $name = $n->format('ISO');
     push @notes, $name;
 }
-
-my $half_one = int ($col_num - 1) / 2;
 
 my $row = 0;
 my $width = 2;

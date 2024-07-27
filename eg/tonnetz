@@ -57,9 +57,9 @@ for my $note (@notes) {
 }
 
 __END__
-G#  D#  A#  F   C   G   D   A   E   
-  C   G   D   A   E   B   F#  C#  G#  
-    E   B   F#  C#  G#  D#  A#  F   C   
-      G#  D#  A#  F   C   G   D   A   E   
-        C   G   D   A   E   B   F#  C#  G#  
-          E   B   F#  C#  G#  D#  A#  F   C
+Ab  Eb  Bb  F   C   G   D   A   E
+  C   G   D   A   E   B   Gb  Db  Ab
+    E   B   Gb  Db  Ab  Eb  Bb  F   C
+      Ab  Eb  Bb  F   C   G   D   A   E
+        C   G   D   A   E   B   Gb  Db  Ab
+          E   B   Gb  Db  Ab  Eb  Bb  F   C

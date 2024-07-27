@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - See if not specifying A::C as a prereq will install it...
 
 0.0802 2024-07-27 12:04:24
     - Slightly improve the eg/tonnetz program.

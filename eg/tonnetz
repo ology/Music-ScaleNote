@@ -8,7 +8,10 @@ use Music::ScaleNote ();
 my $row_offset = shift || 4; # major 3rd
 my $col_offset = shift || 7; # major 5th
 
-my $msn = Music::ScaleNote->new(scale_name => 'chromatic');
+my $msn = Music::ScaleNote->new(
+    scale_name => 'chromatic',
+    flat       => 1,
+);
 
 my $note_name = 'C4';
 

@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Slightly improve the eg/tonnetz program.
 
 0.0801 2024-07-09 20:26:41
     - Simplify prev()/next() logic.

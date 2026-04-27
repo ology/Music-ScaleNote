@@ -2,6 +2,7 @@ Revision history for Music-ScaleNote
 
 {{$NEXT}}
     - Specify the right version of Array::Circular.
+    - Use the new version of the MIDI::Util::midi_format() function.
 
 0.0803 2024-07-27 16:28:38
     - See if not specifying A::C as a prereq will install it...

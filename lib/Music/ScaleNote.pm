@@ -9,6 +9,7 @@ use strictures 2;
 use Carp qw(croak);
 use Array::Circular ();
 use List::SomeUtils qw( first_index );
+use MIDI::Util qw(midi_format);
 use Music::Note ();
 use Music::Scales qw( get_scale_notes );
 use namespace::clean;
@@ -225,6 +226,7 @@ sub get_offset {
         if $self->verbose;
 
     my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
+    @scale = midi_format(0, @scale);
     if ( $flat ) {
         for ( @scale ) {
             if ( $_ =~ /#/ ) {

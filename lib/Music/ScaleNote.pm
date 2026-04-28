@@ -7,11 +7,12 @@ our $VERSION = '0.0805';
 use Moo;
 use strictures 2;
 use Carp qw(croak);
+use Data::Dumper::Compact qw( ddc );
 use Array::Circular ();
 use List::SomeUtils qw( first_index );
 use MIDI::Util qw(midi_format);
 use Music::Note ();
-use Music::Scales qw( get_scale_notes );
+use Music::Scales qw( get_scale_notes get_scale_nums );
 use namespace::clean;
 
 =head1 SYNOPSIS
@@ -101,12 +102,29 @@ has scale_name => (
     default => sub { 'major' },
 );
 
+has _scale => (
+    is      => 'lazy',
+    builder => '_build__scale',
+);
+sub _build__scale {
+    my ($self) = @_;
+    my @base = get_scale_nums( $self->scale_name );
+    my @scale;
+    for my $i (0 .. 9) {
+        for my $degree (@base) {
+            push @scale, $degree + ($i * 12)
+        }
+    }
+    # print ddc \@scale;
+    return \@scale;
+}
+
 =head2 note_format
 
 The format as given by L<Music::Note/STYLES>.  If set in the
 constructor, this is used in the B<get_offset> method.
 
-Default: C<ISO>
+Default: C<midinum>
 
 If the B<note_format> is not recognized, the default is used.
 
@@ -117,7 +135,7 @@ L<Music::Note> in the B<get_offset> method.
 
 has note_format => (
     is      => 'ro',
-    default => sub { 'ISO' },
+    default => sub { 'midinum' },
 );
 
 =head2 offset
@@ -137,7 +155,8 @@ has offset => (
 
 =head2 flat
 
-Boolean indicating that we want only flat notes, not sharps.
+Boolean indicating that we want only flat notes, not sharps, if the
+B<note_format> is set to anything other than C<midinum>.
 
 Default: C<0>
 
@@ -166,97 +185,70 @@ has verbose => (
 =head2 new
 
   $msn = Music::ScaleNote->new;  # Use defaults
-
   $msn = Music::ScaleNote->new(  # Override defaults
     scale_note  => $scale_start_note,
     scale_name  => $scale_name,
-    verbose     => $boolean,
     note_format => $format,
     offset      => $integer,
     flat        => $flat,
+    verbose     => $boolean,
   );
 
 Create a new C<Music::ScaleNote> object.
 
 =head2 get_offset
 
-  $note = $msn->get_offset( note_name => $note_name );
-
-  $note = $msn->get_offset(  # Override defaults
+  $note = $msn->get_offset;
+  $note = $msn->get_offset( # Override defaults
     note_name   => $note_name,
     note_format => $format,
     offset      => $integer,
     flat        => $flat,
   );
 
-Return a new L<Music::Note> object based on the required B<note_name>,
-and optional B<note_format> and B<offset> parameters.
+Return a new L<Music::Note> object based on the optional B<note_name>,
+B<note_format>, and B<offset> parameters.
 
-If the B<note_name> is not recognized, a default of C<C> is used.
-
-For formats of C<isobase>, C<ISO> and C<midi>, the B<note_name> can be
-given as a "bare note name" or a note-octave name.  But for the
-C<midinum> format, the B<note_name> must be given as a MIDI note
-number.
-
-Be aware that if the B<note_name> is given as a "bare note" (with no
-octave), and the B<format> is C<ISO>, the octave returned will be C<4>
-by default.  For B<format> of C<midinum> and the B<note_name> being a
-letter, a nonsensical result will be returned.  This mixing up of
-format and note name is B<not> how to use this module.
+If the B<note_name> is not recognized, a default of C<60> (middle-C)
+is used.
 
 =cut
 
 sub get_offset {
     my ( $self, %args ) = @_;
 
-    my $name   = $args{note_name};
+    my $name   = $args{note_name}   || $self->scale_note;
     my $format = $args{note_format} || $self->note_format;
-    my $offset = $args{offset} || $self->offset;
-    my $flat   = $args{flat} || $self->flat;
+    my $offset = $args{offset}      || $self->offset;
+    my $flat   = $args{flat}        || $self->flat;
 
     croak 'note_name, note_format or offset not provided'
         unless $name || $format || $offset;
 
     my $note = Music::Note->new( $name, $format );
+    croak 'Note not defined!' unless $note->format($format) eq $name;
+
+    my $octave = $note->octave;
+
     $note->en_eq('flat') if $flat && $note->format('isobase') =~ /#/;
 
     printf "Given note: %s, Format: %s, ISO: %s, Offset: %d\n",
         $name, $format, $note->format('ISO'), $offset
         if $self->verbose;
 
-    my @scale = get_scale_notes( $self->scale_note, $self->scale_name );
-    @scale = midi_format(0, @scale);
-    if ( $flat ) {
-        for ( @scale ) {
-            if ( $_ =~ /#/ ) {
-                my $equiv = Music::Note->new( $_, $format );
-                $equiv->en_eq('flat');
-                $_ = $equiv->format('isobase');
-            }
-        }
-    }
-    print "\tScale: @scale\n"
-        if $self->verbose;
-
-    my $ac = Array::Circular->new( @scale );
-
-    my $posn = first_index { $note->format('isobase') eq $_ } @scale;
+    my $posn = first_index { $note->format('midinum') == $_ } @{ $self->_scale };
     if ( $posn >= 0 ) {
-        printf "\tPosition: %d\n", $posn
+        printf "\tPosition: %d, Offset position: %d\n", $posn, $posn + $offset
             if $self->verbose;
-        $ac->index( $posn );
     }
     else {
         croak 'Scale position not defined!';
     }
 
-    $ac->next( $offset );
+    my $n = $self->_scale->[ $posn + $offset ];
+    $note = Music::Note->new( $n, 'midinum' );
 
-    my $octave = $note->octave;
-    $octave += $ac->loops;
-
-    $note = Music::Note->new( $ac->current . $octave, 'ISO' );
+    $note->en_eq('flat') if $flat;
 
     printf "\tOctave: %d, ISO: %s, Formatted: %s\n",
         $octave, $note->format('ISO'), $note->format($format)

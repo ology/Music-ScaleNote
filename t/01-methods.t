@@ -10,13 +10,13 @@ use_ok 'Music::ScaleNote';
 subtest throws => sub {
     my $msn = new_ok 'Music::ScaleNote' => [ scale_name => 'pminor' ];
     throws_ok {
-        $msn->get_offset( note_name => 'C#' );
+        $msn->get_offset( note_name => 61 );
     } qr/Scale position not defined/, 'note_name not in scale';
 
-    $msn = new_ok 'Music::ScaleNote' => [ scale_note => 'X' ];
+    $msn = new_ok 'Music::ScaleNote' => [ scale_note => 'X', note_format => 'isobase', verbose => 1 ];
     throws_ok {
         $msn->get_offset;
-    } qr/Scale position not defined/, 'scale_note not defined';
+    } qr/not defined/, 'scale_note not defined';
 };
 
 subtest offsets => sub {
@@ -25,40 +25,25 @@ subtest offsets => sub {
         # verbose    => 1,
     ];
 
-    my $format = 'midinum';
     my $note = $msn->get_offset(
-        note_name   => 63,
-        note_format => $format,
+        note_name => 63,
     );
     isa_ok $note, 'Music::Note';
-    is $note->format($format), 65, 'get_offset';
+    is $note->format('midinum'), 65, 'get_offset';
 
-    $format = 'ISO';
-    is $note->format($format), 'F4', 'get_offset';
-
-    $format = 'midinum';
     $note = $msn->get_offset(
-        note_name   => 60,
+        note_name => 60,
+        offset    => -1,
+    );
+    is $note->format('midinum'), 58, 'get_offset';
+
+    my $format = 'ISO';
+    $note = $msn->get_offset(
+        note_name   => 'D#4',
         note_format => $format,
         offset      => -1,
     );
-    is $note->format($format), 58, 'get_offset';
-
-    $format = 'ISO';
-    $note = $msn->get_offset(
-        note_name => 'D#4',
-        offset    => -1,
-    );
     is $note->format($format), 'C4', 'get_offset';
-
-    $note = $msn->get_offset(
-        note_name => 'D#',
-        offset    => -1,
-    );
-    is $note->format($format), 'C4', 'get_offset';
-
-    $format = 'midinum';
-    is $note->format($format), 60, 'get_offset';
 
     $format = 'isobase';
     $note = $msn->get_offset(
@@ -66,11 +51,11 @@ subtest offsets => sub {
         note_format => $format,
         offset      => -1,
     );
-    is $note->format($format), 'C', 'get_offset';
+    is $note->format('ISO'), 'C4', 'get_offset'; # default octave = 4
 
     $format = 'midi';
     $note = $msn->get_offset(
-        note_name   => 'C',
+        note_name   => 'C4',
         note_format => $format,
         offset      => -1,
         flat        => 1,
@@ -81,7 +66,7 @@ subtest offsets => sub {
 subtest steps => sub {
     my $msn = new_ok 'Music::ScaleNote' => [
         scale_name => 'pminor',
-        # verbose    => 1,
+        verbose    => 1,
     ];
 
     my $format = 'midi';

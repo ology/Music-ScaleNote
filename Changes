@@ -1,6 +1,8 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+
+0.0900 2026-04-29 10:22:51
     - Simplify logic greatly.
     - Update tests.
     - Improve documentation.

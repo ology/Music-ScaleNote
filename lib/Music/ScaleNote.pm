@@ -21,33 +21,35 @@ use namespace::clean;
 
   my $msn = Music::ScaleNote->new(
     scale_note  => 'C',
-    scale_name  => 'pminor',
-    note_format => 'ISO',
-    offset      => 1,
-    verbose     => 1,
+    scale_name  => 'major',
+    note_format => 'isobase',
   );
+  my $note = $msn->get_offset; # using defaults
+  print $note->format('ISO'), "\n"; # D4
 
-  my $note = $msn->get_offset(note_name => 'C4');
-  say $note->format('ISO'); # D#4
-
-  $msn = Music::ScaleNote->new(
-    scale_note => 'C',
-    scale_name => 'major',
-  );
+  $msn = Music::ScaleNote->new( scale_note => 60 );
+  $note = $msn->get_offset;
+  print $note->format('midinum'), "\n"; # 62
 
   $note = $msn->get_offset(
-    note_name   => 60,
-    note_format => 'midinum',
-    offset      => -1,
+    note_name => $note->format('midinum'),
+    offset    => -1,
   );
-  say $note->format('midinum'); # 58
+  print $note->format('midinum'), "\n"; # 60
+
+  $note = $msn->get_offset(
+    note_name => $note->format('midinum'),
+    offset    => -2,
+  );
+  print $note->format('midinum'), "\n"; # 57
 
   $note = $msn->step(
-    note_name => 'D3',
-    steps     => -1,
-    flat      => 1,
+    note_name   => 'Eb3',
+    note_format => 'ISO',
+    steps       => -2,
+    flat        => 1,
   );
-  say $note->format('ISO'); # Db3
+  print $note->format('ISO'), "\n"; # Db3
 
 =head1 DESCRIPTION
 
@@ -71,12 +73,12 @@ given number of half-B<steps> away from a given B<note_name>.
 
 =head2 scale_note
 
-This is the isobase name of the note (with no octave) that starts the
-scale.
+This is the C<isobase> name of the note (with no octave) that starts
+the scale.
 
 Default: C<C>
 
-Examples: C<G#>, C<Eb>
+Examples: C<D>, C<G#>, C<Eb>
 
 =cut
 
@@ -92,8 +94,6 @@ This is the name of the scale to use.
 Please see L<Music::Scales/SCALES> for the possibilities.
 
 Default: C<major>
-
-If the B<scale_name> is not recognized, the default is used.
 
 =cut
 
@@ -121,15 +121,12 @@ sub _build__scale {
 
 =head2 note_format
 
-The format as given by L<Music::Note/STYLES>.  If set in the
-constructor, this is used in the B<get_offset> method.
+This is used to tell the module what the type of B<scale_note> is.
+
+Please see the formats in L<Music::Note/STYLES>. This is used in the
+B<get_offset()> method.
 
 Default: C<midinum>
-
-If the B<note_format> is not recognized, the default is used.
-
-This is used in conjunction with the B<note_name> to determine the
-L<Music::Note> in the B<get_offset> method.
 
 =cut
 
@@ -141,7 +138,7 @@ has note_format => (
 =head2 offset
 
 The integer offset of a new scale position.  If set in the
-constructor, this is used in the B<get_offset> method.
+constructor, this is used in the B<get_offset()> method.
 
 Default: C<1>
 
@@ -267,24 +264,22 @@ sub get_offset {
     flat      => $flat,
   );
 
-Return a new L<Music::Note> object based on the required B<note_name>
-and number of half-B<steps> - either a positive or negative integer.
+Return a new L<Music::Note> object based on the B<note_name> and
+number of half-B<steps> - either a positive or negative integer.
 
-Default steps: 1
+Default step: C<1>
 
 =cut
 
 sub step {
     my ( $self, %args ) = @_;
 
-    my $name  = $args{note_name};
-    my $steps = $args{steps} || 1;
-    my $flat  = $args{flat} || $self->flat;
+    my $name   = $args{note_name}   || $self->scale_note;
+    my $format = $args{note_format} || $self->note_format;
+    my $steps  = $args{steps}       || 1;
+    my $flat   = $args{flat}        || $self->flat;
 
-    croak 'note_name not provided'
-        unless $name;
-
-    my $note = Music::Note->new( $name, $self->note_format );
+    my $note = Music::Note->new( $name, $format );
     my $num  = $note->format('midinum');
 
     printf "Given note: %s, ISO: %s, Formatted: %d\n",

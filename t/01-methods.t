@@ -11,9 +11,9 @@ subtest throws => sub {
     my $msn = new_ok 'Music::ScaleNote' => [ scale_name => 'pminor' ];
     throws_ok {
         $msn->get_offset( note_name => 61 );
-    } qr/Scale position not defined/, 'note_name not in scale';
+    } qr/position not defined/, 'note_name not in scale';
 
-    $msn = new_ok 'Music::ScaleNote' => [ scale_note => 'X', note_format => 'isobase', verbose => 1 ];
+    $msn = new_ok 'Music::ScaleNote' => [ scale_note => 'X', note_format => 'isobase' ];
     throws_ok {
         $msn->get_offset;
     } qr/not defined/, 'scale_note not defined';
@@ -64,14 +64,15 @@ subtest offsets => sub {
 };
 
 subtest steps => sub {
-    my $msn = new_ok 'Music::ScaleNote' => [
-        scale_name => 'pminor',
-        verbose    => 1,
-    ];
-
     my $format = 'midi';
 
-    my $note = $msn->step( note_name => 'C' );
+    my $msn = new_ok 'Music::ScaleNote' => [
+        scale_name  => 'pminor',
+        note_format => $format,
+        # verbose     => 1,
+    ];
+
+    my $note = $msn->step( note_name => 'C4' );
     isa_ok $note, 'Music::Note';
     is $note->format($format), 'Cs4', 'step';
 
@@ -105,7 +106,7 @@ subtest steps => sub {
     $msn = new_ok 'Music::ScaleNote' => [
         scale_note  => 'D',
         note_format => $format,
-    #    verbose     => 1,
+        # verbose     => 1,
     ];
 
     $note = $msn->step(
@@ -113,6 +114,40 @@ subtest steps => sub {
         steps     => 2,
     );
     is $note->format($format), 64, 'step';
+};
+
+subtest synopsis => sub {
+    my $msn = Music::ScaleNote->new(
+        scale_note  => 'C',
+        scale_name  => 'major',
+        note_format => 'isobase',
+    );
+    my $note = $msn->get_offset; # using defaults
+    is $note->format('ISO'), 'D4', 'get_offset';
+
+    $msn = Music::ScaleNote->new( scale_note => 60 );
+    $note = $msn->get_offset;
+    is $note->format('midinum'), 62, 'get_offset';
+
+    $note = $msn->get_offset(
+        note_name => $note->format('midinum'),
+        offset    => -1,
+    );
+    is $note->format('midinum'), 60, 'get_offset';
+
+    $note = $msn->get_offset(
+        note_name => $note->format('midinum'),
+        offset    => -2,
+    );
+    is $note->format('midinum'), 57, 'get_offset';
+
+    $note = $msn->step(
+        note_name   => 'Eb3',
+        note_format => 'ISO',
+        steps       => -2,
+        flat        => 1,
+    );
+    is $note->format('ISO'), 'Db3', 'step'
 };
 
 done_testing();

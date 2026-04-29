@@ -1,6 +1,9 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Simplify logic greatly.
+    - Update tests.
+    - Improve documentation.
 
 0.0805 2026-04-27 07:36:47
     - Use the new version of the MIDI::Util::midi_format() function.

@@ -14,6 +14,7 @@ my $half_one = int ($col_num - 1) / 2;
 my $msn = Music::ScaleNote->new(
     scale_name => 'chromatic',
     flat       => 1,
+    # verbose    => 1,
 );
 
 my $note_name = 'C4';
@@ -22,9 +23,10 @@ my $note_name = 'C4';
 my @notes = ($note_name);
 my $name = $note_name;
 for my $i (1 .. $row_num - 1) {
-    my $n = $msn->get_offset(
-        note_name => $name,
-        offset    => $row_offset,
+    my $n = $msn->step(
+        note_name   => $name,
+        note_format => 'ISO',
+        offset      => $row_offset,
     );
     $name = $n->format('ISO');
     push @notes, $name;
@@ -38,8 +40,9 @@ for my $note (@notes) {
 
     for my $i (-$half_one .. -1) {
         my $n = $msn->get_offset(
-            note_name => $note,
-            offset    => $i * $col_offset,
+            note_name   => $note,
+            note_format => 'ISO',
+            offset      => $i * $col_offset,
         );
         printf '%-*s  ', $width, $n->format('isobase');
     }
@@ -49,8 +52,9 @@ for my $note (@notes) {
 
     for my $i (1 .. $half_one) {
         my $n = $msn->get_offset(
-            note_name => $note,
-            offset    => $i * $col_offset,
+            note_name   => $note,
+            note_format => 'ISO',
+            offset      => $i * $col_offset,
         );
         printf '%-*s  ', $width, $n->format('isobase');
     }

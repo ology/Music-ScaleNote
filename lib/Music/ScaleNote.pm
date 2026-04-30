@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0900';
+our $VERSION = '0.0901';
 
 use Moo;
 use strictures 2;
@@ -223,7 +223,8 @@ sub get_offset {
         unless $name || $format || $offset;
 
     my $note = Music::Note->new( $name, $format );
-    croak 'Note not defined!' unless $note->format($format) eq $name;
+
+    croak "Note not defined for $name and $format!" unless $note->format($format) eq $name;
 
     my $octave = $note->octave;
 
@@ -245,7 +246,7 @@ sub get_offset {
     my $n = $self->_scale->[ $posn + $offset ];
     $note = Music::Note->new( $n, 'midinum' );
 
-    $note->en_eq('flat') if $flat;
+    $note->en_eq('flat') if $flat && $note->format('ISO') =~ /#/;
 
     printf "\tOctave: %d, ISO: %s, Formatted: %s\n",
         $octave, $note->format('ISO'), $note->format($format)

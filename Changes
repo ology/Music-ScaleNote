@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Ack - remove more cruft!
 
 0.0903 2026-04-30 13:20:43
     - Remove cruft and comment debugging.

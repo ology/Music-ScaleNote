@@ -11,7 +11,7 @@ use Carp qw(croak);
 use List::SomeUtils qw( first_index );
 use MIDI::Util qw(midi_format);
 use Music::Note ();
-use Music::Scales qw( get_scale_notes get_scale_nums );
+use Music::Scales qw( get_scale_nums );
 use namespace::clean;
 
 =head1 SYNOPSIS

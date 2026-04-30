@@ -2,13 +2,12 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0902';
+our $VERSION = '0.0903';
 
 use Moo;
 use strictures 2;
 use Carp qw(croak);
-use Data::Dumper::Compact qw( ddc );
-use Array::Circular ();
+# use Data::Dumper::Compact qw( ddc );
 use List::SomeUtils qw( first_index );
 use MIDI::Util qw(midi_format);
 use Music::Note ();

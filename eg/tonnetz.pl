@@ -23,7 +23,7 @@ my $note_name = 'C4';
 my @notes = ($note_name);
 my $name = $note_name;
 for my $i (1 .. $row_num - 1) {
-    my $n = $msn->step(
+    my $n = $msn->get_offset(
         note_name   => $name,
         note_format => 'ISO',
         offset      => $row_offset,

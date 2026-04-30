@@ -1,6 +1,8 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+
+0.0901 2026-04-30 08:35:35
     - Correctly handle requesting flat logic.
 
 0.0900 2026-04-29 10:22:51

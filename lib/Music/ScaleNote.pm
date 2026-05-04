@@ -110,7 +110,7 @@ sub _build__scale {
     my @scale;
     for my $i (0 .. 10) {
         for my $degree (@base) {
-            push @scale, $degree + ($i * @base)
+            push @scale, $degree + ($i * 12)
         }
     }
     print "@scale\n" if $self->verbose;

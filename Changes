@@ -1,6 +1,8 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+
+0.0905 2026-05-04 11:40:44
     - Fix scale creation logic.
     - Wow... Remove more cruft. :\
     - Improve documentation.

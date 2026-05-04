@@ -302,7 +302,9 @@ sub step {
 
 The F<t/01-methods.t> and F<eg/*.pl> files in this distribution.
 
-L<List::Util>
+L<List::SomeUtils>
+
+L<MIDI::Util>
 
 L<Moo>
 

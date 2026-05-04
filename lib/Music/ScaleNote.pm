@@ -108,12 +108,12 @@ sub _build__scale {
     my ($self) = @_;
     my @base = get_scale_nums( $self->scale_name );
     my @scale;
-    for my $i (0 .. 9) {
+    for my $i (0 .. 10) {
         for my $degree (@base) {
-            push @scale, $degree + ($i * 12)
+            push @scale, $degree + ($i * @base)
         }
     }
-    # print ddc \@scale;
+    print "@scale\n" if $self->verbose;
     return \@scale;
 }
 

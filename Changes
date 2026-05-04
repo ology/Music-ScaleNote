@@ -1,6 +1,7 @@
 Revision history for Music-ScaleNote
 
 {{$NEXT}}
+    - Fix scale creation logic.
     - Wow... Remove more cruft. :\
     - Improve documentation.
 

@@ -300,7 +300,7 @@ sub step {
 
 =head1 SEE ALSO
 
-The F<t/01-methods.t> file in this distribution.
+The F<t/01-methods.t> and F<eg/*.pl> files in this distribution.
 
 L<List::Util>
 

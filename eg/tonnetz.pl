@@ -14,7 +14,7 @@ my $half_one = int ($col_num - 1) / 2;
 my $msn = Music::ScaleNote->new(
     scale_name => 'chromatic',
     flat       => 1,
-    verbose    => 1,
+    # verbose    => 1,
 );
 
 my $note_name = 'C4';

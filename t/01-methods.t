@@ -22,7 +22,7 @@ subtest throws => sub {
 subtest offsets => sub {
     my $msn = new_ok 'Music::ScaleNote' => [
         scale_name => 'pminor',
-        verbose    => 1,
+        # verbose    => 1,
     ];
 
     my $note = $msn->get_offset(

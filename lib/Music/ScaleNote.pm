@@ -2,7 +2,7 @@ package Music::ScaleNote;
 
 # ABSTRACT: Manipulate the position of a note in a scale
 
-our $VERSION = '0.0904';
+our $VERSION = '0.0905';
 
 use Moo;
 use strictures 2;
